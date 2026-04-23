@@ -13,10 +13,10 @@ if not vim.uv.fs_stat(lazypath) then
         vim.cmd("colorscheme ayu-dark")
 
         -- Make Line Numbers highly visible
-        vim.api.nvim_set_hl(0, "LineNr", { fg = "#ffcc66" })       -- Greyish for active
+        vim.api.nvim_set_hl(0, "LineNr", { fg = "#ffcc66" })
         vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#a8a8a8" })
         vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#a8a8a8" })
-        vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#ffcc66", bold = true }) -- Gold for active
+        vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#ffcc66", bold = true })
         end
     },
 
@@ -128,19 +128,4 @@ if not vim.uv.fs_stat(lazypath) then
         })
         end
     },
-    })
-
-    --- ==========================================================================
-    --- THE FLASH FEATURE: Highlight on Yank (Copy)
-    --- ==========================================================================
-    -- This makes the line flash for 300ms when you yank (copy) it.
-    vim.api.nvim_create_autocmd('TextYankPost', {
-        desc = 'Highlight when yanking (copying) text',
-                                group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-                                callback = function()
-                                vim.highlight.on_yank({
-                                    higroup = 'IncSearch', -- The color of the flash
-                                    timeout = 300,         -- Duration in milliseconds
-                                })
-                                end,
     })
