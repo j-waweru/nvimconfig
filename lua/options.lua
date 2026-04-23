@@ -1,0 +1,12 @@
+local opt = vim.opt
+opt.number = true
+opt.relativenumber = true
+opt.shiftwidth = 4
+opt.tabstop = 4
+opt.expandtab = true
+opt.termguicolors = true
+opt.wrap = false
+opt.scrolloff = 999
+opt.splitbelow = true
+opt.splitright = true
+opt.clipboard = "unnamedplus"
