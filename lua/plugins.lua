@@ -20,6 +20,25 @@ if not vim.uv.fs_stat(lazypath) then
         end
     },
 
+    -- SLEEK STATUS LINE
+    {
+        'nvim-lualine/lualine.nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        config = function()
+        require('lualine').setup({
+            options = {
+                theme = 'ayu_dark',
+                component_separators = { left = '', right = ''},
+                section_separators = { left = '', right = ''},
+                globalstatus = true,
+            },
+            sections = {
+                lualine_x = {'encoding', 'fileformat', 'filetype'},
+            }
+        })
+        end
+    },
+
     -- LSP & Intellisense (0.12 Native API)
     {
         "neovim/nvim-lspconfig",
@@ -33,7 +52,6 @@ if not vim.uv.fs_stat(lazypath) then
             vim.lsp.enable(lsp)
             end
 
-            -- ERROR DISPLAY: Shows text on screen for Errors only
             vim.diagnostic.config({
                 virtual_text = {
                     severity = { min = vim.diagnostic.severity.ERROR },
@@ -56,14 +74,13 @@ if not vim.uv.fs_stat(lazypath) then
             end
     },
 
-    -- AUTO-COMPLETION & BRACKETS
+    -- AUTO-COMPLETION
     {
         "hrsh7th/nvim-cmp",
         dependencies = { "L3MON4D3/LuaSnip", "windwp/nvim-autopairs" },
         config = function()
         local cmp = require('cmp')
         local autopairs = require("nvim-autopairs.completion.cmp")
-
         cmp.setup({
             snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end },
                   mapping = cmp.mapping.preset.insert({
@@ -76,10 +93,18 @@ if not vim.uv.fs_stat(lazypath) then
         end
     },
 
+    -- BRACKETS & WEB TAG AUTO-COMPLETE
     {
         "windwp/nvim-autopairs",
         event = "InsertEnter",
         config = true
+    },
+    {
+        "windwp/nvim-ts-autotag",
+        event = "InsertEnter",
+        config = function()
+        require('nvim-ts-autotag').setup()
+        end
     },
 
     -- CODE FOLDING (UFO)
@@ -91,29 +116,84 @@ if not vim.uv.fs_stat(lazypath) then
     vim.o.foldlevel = 99
     vim.o.foldlevelstart = 99
     vim.o.foldenable = true
-
     require('ufo').setup({
         provider_selector = function() return {'lsp', 'indent'} end
     })
-
-    vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-    vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
     end
     },
 
-    -- UI & Navigation
+    -- FILE NAVIGATION & EXPLORER
     { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
-    { "nvim-neo-tree/neo-tree.nvim", dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons", "MunifTanjim/nui.nvim" } },
+    {
+        "nvim-neo-tree/neo-tree.nvim",
+        dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons", "MunifTanjim/nui.nvim" },
+        config = function()
+        require("neo-tree").setup({
+            filesystem = {
+                follow_current_file = { enabled = true, leave_dirs_open = true },
+                use_libuv_file_watcher = true,
+            },
+        })
+        end
+    },
+
+    -- THE "OIL" PLUGIN: Edit the filesystem like a buffer
+    {
+        "stevearc/oil.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        config = function()
+        require("oil").setup()
+        vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+        end,
+    },
+
+    -- EDITABLE COMMAND BAR (Noice)
     {
         "folke/noice.nvim",
         dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
         config = function()
         require("noice").setup({
-            messages = { enabled = false },
-            presets = { command_palette = true },
+            cmdline = {
+                view = "cmdline_popup",
+                format = {
+                    cmdline = { pattern = "^:", icon = "", lang = "vim" },
+                    search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
+                    search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
+                },
+            },
+            messages = { enabled = true },
+            popupmenu = { enabled = true },
+            presets = {
+                bottom_search = false,
+                command_palette = true,
+                long_message_to_split = true,
+            },
         })
         end
     },
+    -- COMMENTING: gcc to comment a line, gc in visual mode to comment a block
+    {
+        'numToStr/Comment.nvim',
+        config = function()
+        require('Comment').setup()
+        end
+    },
+
+    -- HARPOON: Quick file switching
+    {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+        require("harpoon").setup()
+        end
+    },
+
+    -- UNDOTREE: Visualizing your undo history
+    { "mbbill/undotree" },
+
+    -- FUGITIVE: The best Git wrapper for Vim
+    { "tpope/vim-fugitive" },
 
     -- Formatter (Conform)
     {
