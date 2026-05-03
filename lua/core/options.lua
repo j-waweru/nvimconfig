@@ -1,5 +1,14 @@
 local opt = vim.opt
 
+-- FOLDING SETTINGS
+opt.foldcolumn = '1'    -- Show fold indicators in the gutter
+opt.foldlevel = 99      -- Open most folds by default
+opt.foldlevelstart = 99 -- Ensure folds are open when opening a file
+opt.foldenable = true   -- Enable folding
+
+-- Ibeam cursor
+--opt.guicursor = "a:ver25"
+
 -- Line numbers
 opt.number = true
 opt.relativenumber = true
