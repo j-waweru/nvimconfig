@@ -39,5 +39,14 @@ key('n', '<C-l>', '<C-w>l')
 -- Chmod
 key("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
+
+-- Escape from Insert mode using jk or jj
+key("i", "jk", "<Esc>", { desc = "Escape to Normal Mode" })
+--key("i", "jj", "<Esc>", { desc = "Escape to Normal Mode" })
+
+-- Also useful: Escape from Terminal mode
+--key("t", "jk", [[<C-\><C-n>]], { desc = "Escape Terminal" })
+
+
 -- Escape Terminal
 key('t', '<Esc><Esc>', [[<C-\><C-n>]])

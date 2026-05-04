@@ -37,4 +37,16 @@ return {
             end
     },
 
+    {
+        "stevearc/conform.nvim",
+        config = function()
+        require("conform").setup({
+            formatters_by_ft = { lua = { "stylua" }, python = { "black" }, c = { "clang-format" } },
+        })
+        end
+    },
+
+    -- git integration
+     { "tpope/vim-fugitive" },
+
 }

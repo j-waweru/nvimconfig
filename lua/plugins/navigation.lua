@@ -20,7 +20,6 @@ return {
         end
     },
     { "mbbill/undotree" },
-    { "tpope/vim-fugitive" },
 
 
     -- FOLDING (UFO)
