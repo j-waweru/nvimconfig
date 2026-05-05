@@ -4,16 +4,21 @@ return {
         "Shatur/neovim-ayu",
         config = function()
         require('ayu').setup({ mirage = false })
-        vim.cmd("colorscheme ayu-dark")
 
-        -- Explicitly set colors for visibility
-        local hl = vim.api.nvim_set_hl
-        hl(0, "LineNr", { fg = "#ffcc66" })
-        hl(0, "LineNrAbove", { fg = "#a8a8a8" })
-        hl(0, "LineNrBelow", { fg = "#a8a8a8" })
-        hl(0, "CursorLineNr", { fg = "#ffcc66", bold = true })
-        hl(0, "FoldColumn", { fg = "#ffcc66" }) -- Visible folding icons
-        hl(0, "SignColumn", { bg = "NONE" })    -- Ensure LSP signs show up
+        -- Create a group to handle the "re-coloring" every time the theme loads
+        local fix_colors = vim.api.nvim_create_augroup("FixLineColors", { clear = true })
+        vim.api.nvim_create_autocmd("ColorScheme", {
+            group = fix_colors,
+            callback = function()
+            local hl = vim.api.nvim_set_hl
+            hl(0, "LineNr", { fg = "#ffcc66" })
+            hl(0, "LineNrAbove", { fg = "#a8a8a8" })
+            hl(0, "LineNrBelow", { fg = "#a8a8a8" })
+            hl(0, "CursorLineNr", { fg = "#ffcc66", bold = true })
+            end,
+        })
+
+        vim.cmd("colorscheme ayu-dark")
         end
     },
 
