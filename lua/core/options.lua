@@ -1,10 +1,20 @@
 local opt = vim.opt
 
--- FOLDING SETTINGS
-opt.foldcolumn = '1'    -- Show fold indicators in the gutter
-opt.foldlevel = 99      -- Open most folds by default
-opt.foldlevelstart = 99 -- Ensure folds are open when opening a file
-opt.foldenable = true   -- Enable folding
+-- FOLDING SETTINGS (VSCode Style)
+opt.foldcolumn = '0'     -- Show only one column for indicators
+opt.foldlevel = 99       -- Ensure most folds are open by default
+opt.foldlevelstart = 99 
+opt.foldenable = true
+
+-- CUSTOM INDICATORS
+-- This replaces the numbers with icons and removes the 'eob' (End of Buffer) tildes
+opt.fillchars = {
+    foldopen = "",      -- Chevron Down
+    foldclose = "",     -- Chevron Right
+    fold = " ",          -- Removes the dots/dashes in the fold line
+    foldsep = " ",       -- Removes the vertical separator in folds
+    eob = " ",           -- Removes the ~ at the end of the file
+} -- Enable folding
 
 -- Ibeam cursor
 --opt.guicursor = "a:ver25"

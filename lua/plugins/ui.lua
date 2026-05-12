@@ -40,9 +40,21 @@ return {
 
     -- UI: Noice
     {
-        "folke/noice.nvim",
-        dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
-        config = function()
+    "folke/noice.nvim",
+    dependencies = { 
+        "MunifTanjim/nui.nvim", 
+        -- Update the notify dependency to include the fix
+        {
+            "rcarriga/nvim-notify",
+            opts = {
+                background_colour = "#000000", -- Use your theme's darkest color or #000000
+                fps = 30,
+                render = "default",
+                timeout = 3000,
+            },
+        }
+    },
+    config = function()
         require("noice").setup({
             cmdline = {
                 view = "cmdline_popup",
@@ -52,10 +64,14 @@ return {
                     search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
                 },
             },
-            presets = { command_palette = true, long_message_to_split = true },
+            presets = { 
+                command_palette = true, 
+                long_message_to_split = true,
+                inc_rename = false, -- Set to true if you install inc-rename.nvim
+            },
         })
-        end
-    },
+    end
+},
 
     -- TRANSPARENCY: Configured to protect the Gutter
     {
