@@ -14,7 +14,7 @@ if not vim.uv.fs_stat(lazypath) then
     -- 3. Setup Lazy
     require("lazy").setup({
         spec = {
-            { import = "plugins" }, -- This imports the FOLDER lua/plugins/
+{ import = "plugins" },     -- Loads files in lua/plugins/*.lua        
         },
         -- Optional: This handles the "re-sourcing" automatically
         checker = { enabled = true },
