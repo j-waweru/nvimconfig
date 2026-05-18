@@ -49,5 +49,7 @@ key('n', '<C-l>', '<C-w>l')
 key("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 -- Escape Insert
-key("i", "jk", "<Esc>", { desc = "Escape to Normal Mode" })
+--Remaped caps lock to esc so no need 
+
+--key("i", "jk", "<Esc>", { desc = "Escape to Normal Mode" })
 key('t', '<Esc><Esc>', [[<C-\><C-n>]])
